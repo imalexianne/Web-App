@@ -13,6 +13,10 @@
           <ul class="nav navbar-nav">
             <ul class="nav navbar-nav navbar-right">
               {% if current_user.is_authenticated %}
+
+             <li> <a class="navbar-brand" href="pitches">Pitches </a></li>
+ 
+             <li> <a class="navbar-brand" href="{{url_for('main.new_pitch')}}">Add New Pitch</a></li>
               <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
               <li style="color:white;padding:15px;">{{current_user.username}}</li>
               <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
@@ -24,3 +28,7 @@
 
   </div>
 </div>
+
+
+
+

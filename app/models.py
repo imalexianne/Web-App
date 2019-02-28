@@ -54,6 +54,10 @@ class Pitch(db.Model):
     def get_pitches(cls,id):
         pitches = Pitch.query.filter_by(user_id=id).all()
         return pitches
+
+    @classmethod
+    def clear_pitches(cls):
+       Pitch.all_pitches.clear()
     # users = db.relationship('User',backref = 'role',lazy="dynamic")
 
     def __repr__(self):
@@ -71,6 +75,12 @@ class Comment(db.Model):
 
     def __repr__(self):
         return f'Comment {self.description_all}'
+
+
+
+
+
+
 
 
 

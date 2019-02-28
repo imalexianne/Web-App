@@ -16,7 +16,7 @@ class UpdateProfile(FlaskForm):
 
 class PitchForm(FlaskForm):
     category = StringField('Pitch category',validators=[Required()])
-    description = TextAreaField('user pitch')
+    description_path = TextAreaField('user pitch')
     submit = SubmitField('Submit')
 
 

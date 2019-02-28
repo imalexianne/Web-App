@@ -17,12 +17,12 @@ def index():
     '''
     View root page function that returns the index page and its data
     '''
-
+    all_pitches = Pitch.get_pitches
     
 
     title = 'Home - Welcome to The best Pitches Online'
 
-    return render_template('index.html', title = title )
+    return render_template('index.html', title = title, all_pitches = all_pitches )
 
 
 
@@ -78,21 +78,25 @@ def new_pitch():
     
     if form.validate_on_submit():
         # title = form.title.data
-        description = form.description.data
+        description_path = form.description_path.data
         category = form.category.data
         # Updated review instance
-        new_pitch = Pitch(description=description, category=category, user_id= current_user.id)
+        new_pitch = Pitch(description_path=description_path, category=category, user_id= current_user.id)
 
         # save review method
         new_pitch.save_pitch()
-        return redirect(url_for('.index'))
+        return redirect(url_for('.index',description_path = description_path ))
 
     # title = f'{movie.title} review'
-    return render_template('new_pitch.html', pitch_form=form, user=current_user)
+    return render_template('new_pitch.html', pitch_form=form)
+
+
+
 
 
 @main.route('/pitch/<int:id>')
 def single_pitch(id):
+    login_required
     pitch=Pitch.query.get(id)
     if pitch is None:
         abort(404)
@@ -101,27 +105,8 @@ def single_pitch(id):
 
 
 
-
-# @main.route('/pitch/')
-
-# def pitch():
-
-#     return render_template("index.html")
-
-# @main.route('/comment/')
-
-# def comment():
-
-#     return render_template("index.html")
-
-
-# @main.route('/user/<uname>/update/pic',methods= ['POST'])
-# @login_required
-# def update_pic(uname):
-#     user = User.query.filter_by(username = uname).first()
-#     if 'photo' in request.files:
-#         filename = photos.save(request.files['photo'])
-#         path = f'photos/{filename}'
-#         user.profile_pic_path = path
-#         db.session.commit()
-#     return redirect(url_for('main.profile',uname=uname))
+@main.route('/pitch')
+def diplay_pitch():
+   all_pitches = Pitch.get_pitches()
+   print(all_pitches)
+   return render_template("pitch.html",all_pitches = all_pitches)
