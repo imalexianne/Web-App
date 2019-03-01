@@ -2,8 +2,8 @@ from flask_login import login_required,current_user
 from . import main
 from flask import render_template,request,redirect,url_for,abort
 # from ..models import User,PhotoProfile
-from ..models import User,Pitch
-from .forms import UpdateProfile,PitchForm
+from ..models import User,Pitch,Comment
+from .forms import UpdateProfile,PitchForm,CommentForm
 # from .forms import ReviewForm,UpdateProfile
 from .. import db,photos
 import markdown2 
@@ -17,12 +17,12 @@ def index():
     '''
     View root page function that returns the index page and its data
     '''
-    all_pitches = Pitch.get_pitches
-    
+    pitches = Pitch.get_pitches(id)
+    comments = Comment.get_comments()
+    title = 'Home - Welcome to The best Pitches Review Website Online'
 
-    title = 'Home - Welcome to The best Pitches Online'
+    return render_template('index.html', title = title, pitches=pitches,comments= comments)
 
-    return render_template('index.html', title = title, all_pitches = all_pitches )
 
 
 
@@ -80,8 +80,10 @@ def new_pitch():
         # title = form.title.data
         description_path = form.description_path.data
         category = form.category.data
+        posted = form.posted.data
+
         # Updated review instance
-        new_pitch = Pitch(description_path=description_path, category=category, user_id= current_user.id)
+        new_pitch = Pitch(description_path=description_path, category=category,posted=posted, user_id= current_user.id)
 
         # save review method
         new_pitch.save_pitch()
@@ -107,6 +109,33 @@ def single_pitch(id):
 
 @main.route('/pitch')
 def diplay_pitch():
-   all_pitches = Pitch.get_pitches()
-   print(all_pitches)
-   return render_template("pitch.html",all_pitches = all_pitches)
+   pitches = Pitch.get_pitches()
+   print(pitches)
+   return render_template("new_pitch.html",pitches = pitches)
+
+
+@main.route('/comment/new',methods= ['GET','POST'])
+@login_required
+def new_comment():
+    form = CommentForm()
+    if form.validate_on_submit():
+        description_all = form.description_all.data
+        
+        
+
+        # Updated review instance
+        new_comment = Comment(description_all=description_all,user_id=current_user.id)
+
+        # save review method
+        new_comment.save_comment()
+        return redirect(url_for('.index',description_all=description_all ))
+
+ 
+    return render_template('new_comment.html', comment_form=form)
+
+@main.route('/comment',methods= ['GET','POST'])
+@main.route('/comment')
+def diplay_comment():
+   comments = Comment.get_comments()
+   print(comments)
+   return render_template("comment.html",comments = comments)

@@ -1,20 +1,38 @@
-{% extends 'base.html'%}
-{% import 'macros.html' as macro%}
- <!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="en">
+  <head>
 
   <meta charset="UTF-8">
+  {% if title %}
+
+  <title> {{ title }}</title>
+  {% else %}
+  <title> Welcome to the best pitches </title>
+  {% endif %}
+  {% extends 'base.html'%}
+  {% import 'macros.html' as macro%}
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <head>
+ 
+  
    
   </head>
 
 <body>
+  {% block content %}
   <h1>Hello wellcome to pitches</h1>
- {%block content%}
-     {%for pitches in all_pitches%}
+  <ul>
+      {%for pitch in pitches%}       
+     <li>{{pitch.description_path}}</li> 
+     <a href="/comment/new" class="btn">Leave comment</a>
+     <a href="/comment" class="btn">view comments</a>
+  
+  {%endfor%}
+  </ul>
+  <a href="/pitch/new" class="btn">Add pitch</a>
+  {% endblock%}
+
 </body>
 </html>
 

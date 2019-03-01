@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% import "bootstrap/wtf.html" as wtf %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block styles%}
+        {{ super() }}
+        <link rel="stylesheet" href="{{url_for('static',filename='index.css')}}">
+        
+        {% endblock %}
+</head>
+<body>
+    {%block content%}
+    {%for comment in comments%}
+    <ul>
+        <li>{{comment.description_all}}</li>
+        
+       
+    </ul>
+    {%endfor%}
+  
+    {%endblock%}
+</body>
+</html>

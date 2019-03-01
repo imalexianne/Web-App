@@ -45,23 +45,23 @@ class Pitch(db.Model):
     category = db.Column(db.String(255))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     comments = db.relationship('Comment',backref = 'pitch',lazy="dynamic")
-
+    def __repr__(self):
+        return f'User {self.description_path}'
     def save_pitch(self):
         db.session.add(self)
         db.session.commit()
 
     @classmethod
     def get_pitches(cls,id):
-        pitches = Pitch.query.filter_by(user_id=id).all()
+        pitches = Pitch.query.all()
         return pitches
 
-    @classmethod
-    def clear_pitches(cls):
-       Pitch.all_pitches.clear()
+    # @classmethod
+    # def clear_pitches(cls):
+    #    Pitch.all_pitches.clear()
     # users = db.relationship('User',backref = 'role',lazy="dynamic")
 
-    def __repr__(self):
-        return f'Pitch {self.description_path}'
+    
 
 class Comment(db.Model):
     __tablename__ = 'comments'
@@ -76,20 +76,11 @@ class Comment(db.Model):
     def __repr__(self):
         return f'Comment {self.description_all}'
 
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
 
-
-
-
-
-
-
-
-
-# class User(UserMixin,db.Model):
-#     __tablename__ = 'users'
-
-#     id = db.Column(db.Integer,primary_key = True)
-#     username = db.Column(db.String(255),index = True)
-#     email = db.Column(db.String(255),unique = True,index = True)
-#     role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
-#     password_hash = db.Column(db.String(255))
+    @classmethod
+    def get_comments(id):
+        comments = Comment.query.all()
+        return comments
