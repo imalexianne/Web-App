@@ -124,7 +124,7 @@ def new_comment():
         
 
         # Updated review instance
-        new_comment = Comment(description_all=description_all,user_id=current_user.id)
+        new_comment = Comment(description_all=description_all,user_id=current_user.id,)
 
         # save review method
         new_comment.save_comment()

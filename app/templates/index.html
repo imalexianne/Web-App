@@ -22,15 +22,20 @@
 <body>
   {% block content %}
   <h1>Hello wellcome to pitches</h1>
+
+ 
   <ul>
       {%for pitch in pitches%}       
-     <li>{{pitch.description_path}}</li> 
-     <a href="/comment/new" class="btn">Leave comment</a>
-     <a href="/comment" class="btn">view comments</a>
+     <li>Pitch:{{pitch.description_path}}</li> 
+     <a href="" class="btn">upvote</a>
+     <a href="" class="btn">downvote</a>
+
+     <a href="/comment/new" class="btn btn-primary btn-md ">Leave comment</a>
+     <a href="/comment" class="btn btn-primary btn-md ">view comments</a>
   
   {%endfor%}
   </ul>
-  <a href="/pitch/new" class="btn">Add pitch</a>
+  <a href="/pitch/new" class="btn btn-primary btn-md" >Add pitch</a>
   {% endblock%}
 
 </body>

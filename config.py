@@ -30,7 +30,7 @@ class ProdConfig(Config):
 
 class TestConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://alexianne:wecode@localhost/webapp'
-
+    DEBUG = True
 
 class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://alexianne:wecode@localhost/webapp'
