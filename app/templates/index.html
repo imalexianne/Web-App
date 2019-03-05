@@ -14,30 +14,37 @@
   {% import 'macros.html' as macro%}
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
- 
+  {% block styles%}
+  {{ super() }}
+  <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
+{% endblock %}
   
    
   </head>
 
 <body>
-  {% block content %}
-  <h1>Hello wellcome to pitches</h1>
-
  
-  <ul>
+  {% block content %}
+  <div class="container-fluid">
+  <h1 class="text-center text-lg">Hello wellcome to pitches</h1>
+  </div>
+  <blockquote class="text-center text-lg">
+
       {%for pitch in pitches%}       
-     <li>Pitch:{{pitch.description_path}}</li> 
-     <a href="" class="btn">upvote</a>
-     <a href="" class="btn">downvote</a>
+     <p>Pitch:{{pitch.description_path}}</p> 
+     
 
      <a href="/comment/new" class="btn btn-primary btn-md ">Leave comment</a>
-     <a href="/comment" class="btn btn-primary btn-md ">view comments</a>
+     <a href="/comment" class="btn btn-primary btn-md ">view comments</a><br><br>
+     <a href="" class="btn btn-primary btn-md">upvote</a>
+     <a href="" class="btn btn-primary btn-md">downvote</a><br><br>
   
   {%endfor%}
-  </ul>
+  
   <a href="/pitch/new" class="btn btn-primary btn-md" >Add pitch</a>
+  </blockquote>
   {% endblock%}
-
+  </div>
 </body>
 </html>
 
